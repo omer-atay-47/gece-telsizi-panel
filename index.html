@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gece Telsizi Paneli</title>
+<style>
+:root{color-scheme:dark;--bg:#09090b;--s:#111113;--s2:#18181b;--s3:#222226;--b:#232327;--bs:#34343a;--t:#fafafa;--m:#a1a1aa;--sub:#71717a;--ac:#ff6b3d;--acs:rgba(255,107,61,.13);--good:#4ade80;--warn:#fbbf24;--info:#60a5fa;--r:14px;--rs:9px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:400 14px/1.55 ui-sans-serif,system-ui,sans-serif}
+h1,h2,h3{margin:0;line-height:1.2;letter-spacing:-.02em;font-weight:600}h1{font-size:1.75rem}p{margin:0}
+.top{position:sticky;top:0;z-index:5;background:rgba(9,9,11,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--b)}
+.top-in{max-width:1200px;margin:auto;padding:12px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:700;display:flex;gap:8px;align-items:center}.brand i{width:22px;height:22px;border-radius:7px;background:var(--ac);display:inline-block}
+nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}nav a{padding:6px 12px;border-radius:var(--rs);color:var(--m);text-decoration:none;font-size:.86rem}nav a:hover{background:var(--s2);color:var(--t)}
+main{max-width:1200px;margin:auto;padding:24px 16px 80px}
+.eyebrow{color:var(--ac);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.head{margin:8px 0 24px}.head p{color:var(--m);margin-top:6px;max-width:680px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:28px}
+.stat{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:14px}.stat b{font-size:1.5rem;display:block}.stat span{color:var(--m);font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px}
+.card.branch{border-color:rgba(255,107,61,.35)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}
+.tag{font-size:.72rem;padding:2px 9px;border-radius:99px;background:var(--s3);color:var(--m)}
+video{width:100%;max-height:440px;background:#000;border-radius:var(--rs);object-fit:contain}
+.ph{height:120px;border:1px dashed var(--bs);border-radius:var(--rs);display:grid;place-items:center;color:var(--sub);font-size:.82rem}
+.small{font-size:.82rem}.muted{color:var(--m)}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:5px 12px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s2);color:var(--t);font:500 .82rem ui-sans-serif,system-ui,sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--s3);border-color:var(--bs)}.btn.ac{background:var(--ac);border-color:var(--ac);color:#140700;font-weight:600}
+select,textarea,input[type=number]{background:var(--bg);color:var(--t);border:1px solid var(--b);border-radius:var(--rs);padding:6px 9px;font:inherit}
+textarea{width:100%;min-height:90px;resize:vertical;margin-top:8px}
+details summary{cursor:pointer;color:var(--m);font-size:.84rem}details p{margin-top:8px;font-size:.85rem;color:var(--m)}
+.vote{display:grid;grid-template-columns:1fr 1fr;gap:8px}.opt{background:var(--s2);border:1px solid var(--b);border-radius:var(--rs);padding:10px;text-align:center}
+.opt.win{border-color:var(--good);background:rgba(74,222,128,.08)}.opt b{display:block;font-size:1.4rem}.opt .q{font-size:.8rem;color:var(--m);margin-bottom:6px}
+.opt input{width:80px;text-align:center}
+.bar{height:6px;background:var(--s3);border-radius:9px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--ac)}
+label.ck{display:flex;gap:8px;align-items:center;font-size:.84rem;cursor:pointer}input[type=checkbox]{accent-color:var(--ac)}
+section{margin-top:40px}h2.sec{margin-bottom:14px;font-size:1.1rem}
+.tree{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.82rem}.node{padding:5px 11px;border-radius:99px;background:var(--s2);border:1px solid var(--b)}.node.done{border-color:var(--info);color:var(--info)}.node.sel{background:var(--acs);border-color:var(--ac)}
+footer{color:var(--sub);font-size:.78rem;margin-top:40px}
+</style></head><body>
+<header class="top"><div class="top-in"><div class="brand"><i></i>Gece Telsizi</div>
+<nav><a href="#harita">Dizi haritası</a><a href="#bolumler">Bölümler</a><a href="#yayin">Etiketler</a><a href="#veri">Yedek</a></nav></div></header>
+<main>
+<div class="head"><div class="eyebrow">Hikâyeli Reels dizisi</div><h1>Gece Telsizi paneli</h1>
+<p>11 bölümlük diziyi buradan yönet: videoları izle, yorumlardan gelen oyları gir, kazanan seçeneğe göre sonraki bölümü belirle, yayın metnini kopyala.</p></div>
+<div class="stats" id="stats"></div>
+<section id="harita" style="margin-top:0"><h2 class="sec">Dizi haritası</h2><div class="tree" id="tree"></div></section>
+<section id="bolumler"><h2 class="sec">Bölümler</h2><div class="grid" id="grid"></div></section>
+<section id="yayin"><h2 class="sec">Ortak etiketler</h2><div class="card"><p class="small muted">Her videonun açıklamasının sonuna eklenir. Tarayıcıda saklanır.</p><textarea id="tags"></textarea></div></section>
+<section id="veri"><h2 class="sec">Yedek</h2><div class="card"><p class="small muted">Oylar ve durumlar bu tarayıcıda saklanır. Başka cihaza taşımak için dışa aktar ve içe aktar.</p>
+<div class="row"><button class="btn" id="exp">Dışa aktar</button><label class="btn">İçe aktar<input type="file" id="imp" accept=".json" hidden></label><button class="btn" id="rst">Sıfırla</button></div></div></section>
+<footer>Sunucu gerekmez; GitHub Pages üzerinde ücretsiz çalışır.</footer>
+</main>
+<script>window.SCRIPTS={"1": "Gece üçte bebek telsizinden bir ses geldi. Kızım uyuyordu. Ama telsizden onun sesi değil, bir kadının fısıltısı geliyordu.\n\nÖnce eşimin uyandığını sandım. Yanıma baktım. Eşim yanımdaydı, derin uykuda.\n\nTelsizden aynı fısıltı tekrar geldi: Babası uyanmadan, onu götürmem lazım.\n\nKalbim durdu. Koşarak odaya girdim. Pencere kapalıydı. Kapı kilitliydi. Kızım huzurla uyuyordu.\n\nAma beşiğin yanında, halının üstünde, ıslak ayak izleri vardı.\n\nTelsizin ekranında yeni bir mesaj yanıp sönüyordu: Bu gece değil. Yarın gece.\n\nŞimdi sana soruyorum. Polisi arayayım mı, yoksa yarın gece telsizin başında mı bekleyeyim? Yorumlara yaz. Kararı sen ver.", "2a": "Titreyen ellerimle 112'yi aradım. Evimizde biri var, dedim. On dakika sonra kapıda iki polis vardı. Evi baştan sona aradılar. Dolaplar boş. Pencereler kilitli. Beşiğin yanına eğildiler. Ayak izleri yoktu. Halı kupkuruydu. Telsizin kaydını dinlediler. Sadece cızırtı. Genç polis bana acıyarak baktı. Çok yorgunsunuz, dedi. Tam giderken yaşlı polis kapıda durdu. Bu evde yıllar önce bir çocuk kayboldu, dedi. Sonra telsizden o ses geldi. Onlar gidince. Sence polise güvenmeli miyim, yoksa kendim mi araştırmalıyım? Yorumlara yaz!", "2b": "Telsizin başında oturdum. Saat gece üç. Eşim yanımda uyuyordu. Nefesini dinledim, her nefeste kalbim biraz daha hızlandı. Ekrandaki yeşil ışıkta hiçbir şey yoktu. Üçü üç geçe, yine o ses geldi. Beşiğin altına bak. Titreyerek kalktım. Parmak uçlarımda kızımın odasına yürüdüm. Beşiğin altında tozlu, küçük bir ahşap kutu vardı. Kutuyu elime aldım, beklediğimden ağırdı. Üstünde tek bir isim yazıyordu: Elif. Bizim kızımızın adı da Elif. Tam o anda ekranda bir gölge belirdi ve bana baktı. Sence kutuyu açayım mı, yoksa eşimi mi uyandırayım? Yorumlara yaz!"};</script>
+<script>
+const EP=[
+{id:"1",no:"1",title:"Fısıltı",video:"videos/bolum1.mp4",q:"Polisi arayayım mı, yoksa yarın gece telsizin başında mı bekleyeyim?",a:"Polisi ara",b:"Bekle",next:{a:"2A",b:"2B"},note:"Telsizden kadın sesi, ıslak ayak izleri: Bu gece değil. Yarın gece."},
+{id:"2a",no:"2A",title:"Polisi ara",video:"videos/bolum2a.mp4",q:"Polise güvenmeli miyim, yoksa kendim mi araştırmalıyım?",a:"Polise güven",b:"Kendin araştır",note:"Polis evi arar, bir şey bulamaz. Yaşlı polis: bu evde yıllar önce bir çocuk kayboldu."},
+{id:"2b",no:"2B",title:"Bekle",video:"videos/bolum2b.mp4",q:"Kutuyu açayım mı, yoksa eşimi mi uyandırayım?",a:"Kutuyu aç",b:"Eşini uyandır",note:"Beşiğin altında Elif yazılı kutu; ekranda bir gölge belirir."},
+{id:"3",no:"3",title:"Yarın Gece",q:"Eşine kanıt göster mi, kendin mi araştır?",a:"Kanıt göster",b:"Kendin araştır",note:"Kamera kurulur, ekranda kimse yok ama ses var."},
+{id:"4",no:"4",title:"Beşiğin Altı",q:"Fotoğrafı eşine göster mi?",a:"Göster",b:"Gösterme",note:"Kutuda battaniye ve 1999 fotoğrafı; arkasında Elif."},
+{id:"5",no:"5",title:"Hatice Teyze",q:"Komşuya güven mi, şüphe mi?",a:"Güven",b:"Şüphe",note:"Selma'nın kızı kayboldu; her gece ışık görüyorum."},
+{id:"6",no:"6",title:"Aynı İsim",q:"Eşi sorgula mı, bekle mi?",a:"Sorgula",b:"Bekle",note:"Bebeğin adı da Elif; eş bir şey saklıyor."},
+{id:"7",no:"7",title:"Eşimin Sırrı",q:"Emlakçıya git mi?",a:"Git",b:"Gitme",note:"Ev çok ucuzdu; emlakçının numarası kapalı."},
+{id:"8",no:"8",title:"Duvarın Arkası",q:"Kapıyı aç mı?",a:"Aç",b:"Açma",note:"Koridor duvarı içi boş; gizli kapı."},
+{id:"9",no:"9",title:"Gizli Oda",q:"Selma'ya ne söylesin?",a:"Yardım edeceğim",b:"Kimsin sen?",note:"Çocuk çizimleri, ortada Selma: Kızımı geri verin."},
+{id:"10",no:"10",title:"Selma'nın Hikâyesi",q:"Polisi ara mı?",a:"Ara",b:"Arama",note:"Selma'ya inanılmamış; belgeler, gerçek isim."},
+{id:"11",no:"11",title:"Son Gece",q:"Devam etsin mi (2. sezon)?",a:"Evet",b:"Hayır",note:"Gerçek ortaya çıkar; telsizden: Anne?"}];
+const KEY="gecetelsizi.v1";let S;
+try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){S={}}
+S.ep=S.ep||{};if(S.tags==null)S.tags="#hikaye #korku #gizem #bebektelsizi #reels #yorumlarayaz #seri #gecetelsizi";
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const st=id=>S.ep[id]=S.ep[id]||{status:"",va:0,vb:0,ck:{}};
+const $=s=>document.querySelector(s);
+const ST={"":"Planlı",wip:"Üretiliyor",ok:"Hazır",pub:"Yayında"};
+const CK=["Video indirildi","Açıklama ve etiket kopyalandı","Instagram'a yüklendi","Sabit yorum soruyla yazıldı"];
+const win=e=>{const s=st(e.id);return s.va===s.vb?null:s.va>s.vb?"a":"b"};
+const cap=e=>e.no+". bölüm: "+e.title+"\n\n"+e.q+"\nYorumlara yaz!\n\n"+S.tags;
+function render(){
+ const made=EP.filter(e=>e.video).length,pub=EP.filter(e=>st(e.id).status==="pub").length,votes=EP.reduce((n,e)=>n+st(e.id).va+st(e.id).vb,0);
+ $("#stats").innerHTML='<div class="stat"><b>'+made+'/'+EP.length+'</b><span>Üretilen video</span></div><div class="stat"><b>'+pub+'</b><span>Yayınlanan</span></div><div class="stat"><b>'+votes+'</b><span>Toplam oy</span></div><div class="stat"><b>'+(EP.length-made)+'</b><span>Planlı bölüm</span></div>';
+ const w1=win(EP[0]);
+ const nd=(id,txt,sel)=>'<span class="node '+(st(id).status==="pub"?"done ":"")+(sel?"sel":"")+'">'+txt+'</span>';
+ $("#tree").innerHTML=nd("1","1 Fısıltı",false)+' → oy: Polisi ara / Bekle → '+nd("2a","2A Polisi ara",w1==="a")+' veya '+nd("2b","2B Bekle",w1==="b")+' → <span class="node">3 … 11</span>';
+ $("#grid").innerHTML=EP.map(e=>{const s=st(e.id),w=win(e),tot=(s.va+s.vb)||1,sc=window.SCRIPTS[e.id];
+  let h='<div class="card '+(e.next?"branch":"")+'"><div class="row between"><div><span class="tag">Bölüm '+e.no+'</span> <b>'+e.title+'</b></div><select data-st="'+e.id+'">'+Object.keys(ST).map(k=>'<option value="'+k+'"'+(s.status===k?" selected":"")+'>'+ST[k]+'</option>').join("")+'</select></div>';
+  h+=e.video?'<video controls preload="metadata" src="'+e.video+'"></video>':'<div class="ph">Henüz üretilmedi</div>';
+  h+='<p class="small muted">'+e.note+'</p><div class="small"><b>Yorum sorusu:</b> '+e.q+'</div>';
+  h+='<div class="vote"><div class="opt '+(w==="a"?"win":"")+'"><div class="q">A · '+e.a+'</div><b>'+s.va+'</b><input type="number" min="0" value="'+s.va+'" data-v="'+e.id+':va"><div class="bar"><i style="width:'+(s.va/tot*100)+'%"></i></div></div>';
+  h+='<div class="opt '+(w==="b"?"win":"")+'"><div class="q">B · '+e.b+'</div><b>'+s.vb+'</b><input type="number" min="0" value="'+s.vb+'" data-v="'+e.id+':vb"><div class="bar"><i style="width:'+(s.vb/tot*100)+'%"></i></div></div></div>';
+  h+=w?'<div class="small" style="color:var(--good)">Kazanan: '+(w==="a"?e.a:e.b)+(e.next?' → '+e.next[w]+' bölümüne devam':'')+'</div>':'<div class="small muted">Yorumlardaki oyları buraya gir.</div>';
+  if(sc)h+='<details><summary>Anlatım metni</summary><p>'+sc+'</p></details>';
+  if(e.video){h+='<div>'+CK.map((c,i)=>'<label class="ck"><input type="checkbox" data-ck="'+e.id+':'+i+'"'+(s.ck[i]?" checked":"")+'>'+c+'</label>').join("")+'</div>';
+   h+='<div class="row"><a class="btn ac" href="'+e.video+'" download="gece-telsizi-'+e.no+'.mp4">Videoyu indir</a><button class="btn" data-cp="'+e.id+'">Açıklamayı kopyala</button></div>'}
+  return h+'</div>'}).join("");
+ $("#tags").value=S.tags;
+}
+document.addEventListener("change",x=>{const t=x.target;
+ if(t.dataset.st){st(t.dataset.st).status=t.value}
+ else if(t.dataset.v){const p=t.dataset.v.split(":");st(p[0])[p[1]]=Math.max(0,+t.value||0)}
+ else if(t.dataset.ck){const p=t.dataset.ck.split(":");st(p[0]).ck[p[1]]=t.checked}
+ else if(t.id==="tags"){S.tags=t.value}else return;
+ save();const y=scrollY;render();scrollTo(0,y)});
+document.addEventListener("click",x=>{const b=x.target.closest("[data-cp]");if(!b)return;const e=EP.find(e=>e.id===b.dataset.cp);
+ navigator.clipboard.writeText(cap(e)).then(()=>{b.textContent="Kopyalandı";setTimeout(()=>b.textContent="Açıklamayı kopyala",1500)})});
+$("#exp").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="gece-telsizi-yedek.json";a.click()};
+$("#imp").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{S=JSON.parse(t);save();render()}catch(err){alert("Dosya okunamadı")}})};
+$("#rst").onclick=()=>{if(confirm("Tüm oylar ve durumlar silinsin mi?")){S={ep:{},tags:S.tags};save();render()}};
+render();
+</script></body></html>
